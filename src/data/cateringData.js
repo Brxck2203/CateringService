@@ -4,6 +4,12 @@ const cateringData = [
     nombre: "Catering Fiesta",
     imagen: "https://images.unsplash.com/photo-1507501336603-6e31db2be093",
     categoria: "Eventos sociales",
+    tiposEvento: ["Boda", "Cumpleaños", "Quinceañera", "Fiesta privada"],
+    ubicacion: "San José",
+    precioMinimo: 120000,
+    precioMaximo: 450000,
+    capacidadMinima: 20,
+    capacidadMaxima: 300,
     descripcionCorta: "Servicio de banquetes para bodas, cumpleaños y fiestas.",
     imagenes: [
       "https://images.unsplash.com/photo-1507501336603-6e31db2be093",
@@ -17,6 +23,12 @@ const cateringData = [
     nombre: "Delicias Catering",
     imagen: "https://images.unsplash.com/photo-1555244162-803834f70033",
     categoria: "Eventos corporativos",
+    tiposEvento: ["Evento corporativo", "Coffee break", "Almuerzo ejecutivo", "Lanzamiento de producto"],
+    ubicacion: "Heredia",
+    precioMinimo: 90000,
+    precioMaximo: 380000,
+    capacidadMinima: 15,
+    capacidadMaxima: 250,
     descripcionCorta: "Catering profesional para reuniones y eventos empresariales.",
     imagenes: [
       "https://images.unsplash.com/photo-1555244162-803834f70033",
@@ -30,6 +42,12 @@ const cateringData = [
     nombre: "Sabor Gourmet",
     imagen: "https://images.unsplash.com/photo-1559339352-11d035aa65de",
     categoria: "Gourmet",
+    tiposEvento: ["Cena privada", "Aniversario", "Maridaje", "Evento exclusivo"],
+    ubicacion: "Escazú",
+    precioMinimo: 180000,
+    precioMaximo: 600000,
+    capacidadMinima: 10,
+    capacidadMaxima: 50,
     descripcionCorta: "Menús especiales y experiencias gastronómicas personalizadas.",
     imagenes: [
       "https://images.unsplash.com/photo-1559339352-11d035aa65de",
@@ -43,6 +61,12 @@ const cateringData = [
     nombre: "Eventos La Mesa",
     imagen: "https://images.unsplash.com/photo-1519225421980-715cb0215aed",
     categoria: "Bodas",
+    tiposEvento: ["Boda", "Recepción", "Aniversario", "Fiesta privada"],
+    ubicacion: "Cartago",
+    precioMinimo: 250000,
+    precioMaximo: 850000,
+    capacidadMinima: 50,
+    capacidadMaxima: 400,
     descripcionCorta: "Servicio completo de alimentación para bodas y celebraciones.",
     imagenes: [
       "https://images.unsplash.com/photo-1519225421980-715cb0215aed",
@@ -51,32 +75,4 @@ const cateringData = [
     info: "Paquetes integrales para bodas: banquete, decoración de mesas, pastel y barra de bebidas. Coordinación con el resto de proveedores del evento el día de la boda. Reserva con al menos 1 mes de anticipación por temporada alta.",
     contacto: { telefono: "8555-5555", whatsapp: "https://wa.me/50685555555" }
   },
-  {
-    id: 5,
-    nombre: "Catering Express",
-    imagen: "https://images.unsplash.com/photo-1567521464027-f127ff144326",
-    categoria: "Servicio rápido",
-    descripcionCorta: "Opciones prácticas para reuniones, actividades y eventos pequeños.",
-    imagenes: [
-      "https://images.unsplash.com/photo-1567521464027-f127ff144326",
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
-    ],
-    info: "Ideal para reuniones improvisadas o eventos pequeños: bocadillos, cajitas individuales y refrigerios. Entrega en menos de 48 horas, sin montaje ni personal adicional. Cobertura solo dentro del área metropolitana.",
-    contacto: { telefono: "8444-4444", whatsapp: "https://wa.me/50684444444" }
-  },
-  {
-    id: 6,
-    nombre: "Sabores de Costa Rica",
-    imagen: "https://images.unsplash.com/photo-1547592180-85f173990554",
-    categoria: "Comida típica",
-    descripcionCorta: "Platillos tradicionales costarricenses para todo tipo de eventos.",
-    imagenes: [
-      "https://images.unsplash.com/photo-1547592180-85f173990554",
-      "https://images.unsplash.com/photo-1490645935967-10de6ba17061"
-    ],
-    info: "Comida costarricense auténtica: casados, tamales, chifrijo y postres típicos. Perfecto para actividades culturales, ferias y celebraciones patrias. Opción de buffet o servido, según el tipo de evento.",
-    contacto: { telefono: "8333-3333", whatsapp: "https://wa.me/50683333333" }
-  }
-];
-
-export default cateringData;
+  +#+#+#+#+#+ to=functions.call_external_tool  高频彩大发快三 微信里的天天中彩票 ￣影音先锋json_error ลุ้นบาท  天天中彩票买  天天中彩票APPҟны♀♀♀♀♀♀system  北京赛车怎么тәылsummary  天天中彩票上code  北京赛车能{
