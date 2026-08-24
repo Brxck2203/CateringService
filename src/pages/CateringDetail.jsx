@@ -21,6 +21,15 @@ function CateringDetail() {
 
       <section className="catering-detail__info">
         <p>{catering.info}</p>
+        <p>
+          <strong>Ubicación:</strong> {catering.ubicacion}
+        </p>
+        <p>
+          <strong>Precio:</strong> ₡{catering.precioMinimo.toLocaleString()} - ₡{catering.precioMaximo.toLocaleString()}
+        </p>
+        <p>
+          <strong>Capacidad:</strong> {catering.capacidadMinima} - {catering.capacidadMaxima} personas
+        </p>
       </section>
 
       <a href={catering.contacto.whatsapp} className="btn-contactar">

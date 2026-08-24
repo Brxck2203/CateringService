@@ -14,6 +14,7 @@ function CateringCard({ catering }) {
         <h2>{catering.nombre}</h2>
         <p className="catering-card__category">{catering.categoria}</p>
         <p>{catering.descripcionCorta}</p>
+        <p className="catering-card__location">{catering.ubicacion}</p>
       </div>
     </div>
   );

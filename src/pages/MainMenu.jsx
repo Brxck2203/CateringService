@@ -13,6 +13,7 @@ const initialFilters = {
 
 function MainMenu() {
   const [filters, setFilters] = useState(initialFilters);
+  const hasActiveFilters = Object.values(filters).some(Boolean);
 
   const eventTypes = useMemo(
     () => [...new Set(cateringData.flatMap((catering) => catering.tiposEvento))].sort(),
@@ -77,8 +78,16 @@ function MainMenu() {
 
       <section className="filters" aria-label="Filtros de servicios de catering">
         <div className="filters__header">
-          <h2>Buscar y filtrar</h2>
-          <button className="filters__clear" type="button" onClick={clearFilters}>
+          <div>
+            <p className="filters__eyebrow">Personaliza tu búsqueda</p>
+            <h2>Encuentra tu catering ideal</h2>
+          </div>
+          <button
+            className="filters__clear"
+            type="button"
+            onClick={clearFilters}
+            disabled={!hasActiveFilters}
+          >
             Limpiar filtros
           </button>
         </div>
