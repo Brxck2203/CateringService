@@ -164,6 +164,7 @@ const cateringData = [
     ],
     contacto: { telefono: "8444-4444", whatsapp: "https://wa.me/50684444444" }
   },
+
   {
     id: 6,
     nombre: "Catering Verde",
@@ -396,5 +397,7 @@ const cateringData = [
     contacto: { telefono: "8660-7878", whatsapp: "https://wa.me/50686607878" }
   }
 ];
+
+
 
 export default cateringData;
