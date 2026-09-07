@@ -7,8 +7,11 @@ const initialFilters = {
   eventType: "",
   category: "",
   location: "",
+  date: "",
   maxBudget: "",
   guests: "",
+  menuType: "",
+  minRating: "",
 };
 
 function MainMenu() {
@@ -19,12 +22,19 @@ function MainMenu() {
     () => [...new Set(cateringData.flatMap((catering) => catering.tiposEvento))].sort(),
     [],
   );
+
   const categories = useMemo(
     () => [...new Set(cateringData.map((catering) => catering.categoria))].sort(),
     [],
   );
+
   const locations = useMemo(
     () => [...new Set(cateringData.map((catering) => catering.ubicacion))].sort(),
+    [],
+  );
+
+  const menuTypes = useMemo(
+    () => [...new Set(cateringData.flatMap((catering) => catering.tiposMenu))].sort(),
     [],
   );
 
@@ -32,6 +42,7 @@ function MainMenu() {
     const normalizedQuery = filters.query.trim().toLowerCase();
     const maxBudget = Number(filters.maxBudget);
     const guests = Number(filters.guests);
+    const minRating = Number(filters.minRating);
 
     return cateringData.filter((catering) => {
       const searchableText = [
@@ -39,6 +50,8 @@ function MainMenu() {
         catering.categoria,
         catering.ubicacion,
         ...catering.tiposEvento,
+        ...catering.tiposMenu,
+        ...catering.servicios,
       ]
         .join(" ")
         .toLowerCase();
@@ -48,15 +61,27 @@ function MainMenu() {
       const matchesCategory = !filters.category || catering.categoria === filters.category;
       const matchesLocation = !filters.location || catering.ubicacion === filters.location;
       const matchesBudget = !maxBudget || catering.precioMinimo <= maxBudget;
-      const matchesGuests = !guests || (guests >= catering.capacidadMinima && guests <= catering.capacidadMaxima);
+      const matchesGuests =
+        !guests || (guests >= catering.capacidadMinima && guests <= catering.capacidadMaxima);
+      const matchesMenuType = !filters.menuType || catering.tiposMenu.includes(filters.menuType);
+      const matchesRating = !minRating || catering.calificacion >= minRating;
+
+      let matchesDate = true;
+      if (filters.date) {
+        const selectedDate = new Date(`${filters.date}T12:00:00`);
+        matchesDate = catering.diasDisponibles.includes(selectedDate.getDay());
+      }
 
       return (
         matchesQuery &&
         matchesEventType &&
         matchesCategory &&
         matchesLocation &&
+        matchesDate &&
         matchesBudget &&
-        matchesGuests
+        matchesGuests &&
+        matchesMenuType &&
+        matchesRating
       );
     });
   }, [filters]);
@@ -141,6 +166,11 @@ function MainMenu() {
           </label>
 
           <label className="filters__field">
+            Fecha del evento
+            <input type="date" name="date" value={filters.date} onChange={handleChange} />
+          </label>
+
+          <label className="filters__field">
             Presupuesto máximo (₡)
             <input
               type="number"
@@ -163,11 +193,34 @@ function MainMenu() {
               placeholder="Ejemplo: 80"
             />
           </label>
+
+          <label className="filters__field">
+            Tipo de menú
+            <select name="menuType" value={filters.menuType} onChange={handleChange}>
+              <option value="">Todos</option>
+              {menuTypes.map((menuType) => (
+                <option key={menuType} value={menuType}>
+                  {menuType}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="filters__field">
+            Calificación mínima
+            <select name="minRating" value={filters.minRating} onChange={handleChange}>
+              <option value="">Todas</option>
+              <option value="4">4.0 o más</option>
+              <option value="4.5">4.5 o más</option>
+              <option value="4.8">4.8 o más</option>
+            </select>
+          </label>
         </div>
       </section>
 
       <p className="results-count" aria-live="polite">
-        {filteredCatering.length} {filteredCatering.length === 1 ? "servicio encontrado" : "servicios encontrados"}
+        {filteredCatering.length}{" "}
+        {filteredCatering.length === 1 ? "servicio encontrado" : "servicios encontrados"}
       </p>
 
       {filteredCatering.length > 0 ? (
