@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import cateringData from "../data/cateringData";
+import { useCateringCatalog } from "../context/CateringCatalogContext";
 
 const initialForm = {
   nombre: "",
@@ -20,7 +20,8 @@ function saveToLocalStorage(key, value) {
 
 function QuotationPage() {
   const { id } = useParams();
-  const catering = cateringData.find((item) => item.id === Number(id));
+  const { caterings } = useCateringCatalog();
+  const catering = caterings.find((item) => String(item.id) === id);
   const [form, setForm] = useState(initialForm);
   const [quotation, setQuotation] = useState(null);
   const [contracted, setContracted] = useState(false);
