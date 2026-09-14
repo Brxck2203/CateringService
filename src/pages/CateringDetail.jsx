@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import MenuCatalog from "../components/MenuCatalog";
 import { useCateringCatalog } from "../context/CateringCatalogContext";
+import SiteHeader from "../components/SiteHeader";
 
 function Stars({ value }) {
   const rounded = Math.round(value);
@@ -19,6 +20,7 @@ function CateringDetail() {
   if (!catering) {
     return (
       <main className="catering-detail catering-detail--missing">
+        <SiteHeader />
         <h1>Catering no encontrado</h1>
         <Link to="/">← Volver al menú</Link>
       </main>
@@ -32,6 +34,7 @@ function CateringDetail() {
 
   return (
     <main className="catering-detail">
+      <SiteHeader />
       <Link className="back-link" to="/">
         ← Volver al menú
       </Link>

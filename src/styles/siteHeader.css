@@ -1,0 +1,74 @@
+.site-header {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.site-header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+
+.site-header__brand {
+  color: #1e3a8a;
+  font-weight: 800;
+}
+
+.site-header__login,
+.site-header__profile-button,
+.site-header__dropdown button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.site-header__login,
+.site-header__profile-button {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.site-header__profile {
+  position: relative;
+}
+
+.site-header__dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 10;
+  width: 15rem;
+  padding: 0.75rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+}
+
+.site-header__account-info {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.35rem 0.25rem 0.75rem;
+  color: #374151;
+  font-size: 0.82rem;
+}
+
+.site-header__account-info span {
+  color: #6b7280;
+}
+
+.site-header__dropdown button {
+  width: 100%;
+  background: #fee2e2;
+  color: #b91c1c;
+  text-align: left;
+}
