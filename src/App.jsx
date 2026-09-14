@@ -5,20 +5,31 @@ import QuotationPage from "./pages/QuotationPage";
 import ProviderDashboard from './pages/ProviderDashboard';
 import { CateringCatalogProvider } from "./context/CateringCatalogContext";
 import AuthPage from "./pages/AuthPage";
+import { AuthProvider } from "./context/AuthContext";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   return (
-    <CateringCatalogProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainMenu />} />
-          <Route path="/catering/:id" element={<CateringDetail />} />
-          <Route path="/catering/:id/cotizacion" element={<QuotationPage />} />
-          <Route path="/proveedor/panel" element={<ProviderDashboard />} />
-          <Route path="/acceso" element={<AuthPage />} />
-        </Routes>
-      </BrowserRouter>
-    </CateringCatalogProvider>
+    <AuthProvider>
+      <CateringCatalogProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainMenu />} />
+            <Route path="/catering/:id" element={<CateringDetail />} />
+            <Route
+              path="/catering/:id/cotizacion"
+              element={
+                <RequireAuth>
+                  <QuotationPage />
+                </RequireAuth>
+              }
+            />
+            <Route path="/proveedor/panel" element={<ProviderDashboard />} />
+            <Route path="/acceso" element={<AuthPage />} />
+          </Routes>
+        </BrowserRouter>
+      </CateringCatalogProvider>
+    </AuthProvider>
   );
 }
 

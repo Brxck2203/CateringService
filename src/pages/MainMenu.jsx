@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import CateringCard from "../components/CateringCard";
 import { useCateringCatalog } from "../context/CateringCatalogContext";
+import SiteHeader from "../components/SiteHeader";
 
 const initialFilters = {
   query: "",
@@ -96,6 +97,7 @@ function MainMenu() {
 
   return (
     <main className="main-menu">
+      <SiteHeader />
       <header className="main-menu__header">
         <p className="main-menu__eyebrow">Encuentra el servicio ideal para tu evento</p>
         <h1>Catering Services</h1>

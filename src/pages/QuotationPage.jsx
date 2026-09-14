@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { PROVIDER_CATERING_ID, useCateringCatalog } from "../context/CateringCatalogContext";
 import { addQuotationRequest } from "../services/providerDashboardStorage";
+import SiteHeader from "../components/SiteHeader";
 
 const initialForm = {
   nombre: "",
@@ -30,6 +31,7 @@ function QuotationPage() {
   if (!catering) {
     return (
       <main className="quote-page">
+        <SiteHeader />
         <h1>Proveedor no encontrado</h1>
         <Link to="/">← Volver al menú</Link>
       </main>
@@ -100,6 +102,7 @@ function QuotationPage() {
   if (quotation) {
     return (
       <main className="quote-page">
+        <SiteHeader />
         <Link className="back-link" to={`/catering/${catering.id}`}>
           ← Volver al proveedor
         </Link>

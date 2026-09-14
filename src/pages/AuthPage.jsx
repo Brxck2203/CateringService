@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PROVIDER_CATERING_ID } from '../context/CateringCatalogContext';
+import { useAuth } from '../context/AuthContext';
 import {
   findAccountByEmail,
   registerAccount,
@@ -28,6 +30,9 @@ const isStrongPassword = (password) =>
   password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password);
 
 function AuthPage() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [mode, setMode] = useState('login');
   const [registerForm, setRegisterForm] = useState(initialRegisterForm);
   const [loginForm, setLoginForm] = useState(initialLoginForm);
@@ -103,10 +108,11 @@ function AuthPage() {
       return;
     }
 
-    setMessage(
-      account.role === 'proveedor'
-        ? 'Inicio de sesión exitoso como proveedor de Catering Fiesta. En una versión conectada, accederías directamente al Panel de Control Privado.'
-        : 'Inicio de sesión exitoso como cliente. En una versión conectada, verías el catálogo principal con tus datos de sesión activos.'
+    login(account);
+    const returnTo = location.state?.returnTo;
+    navigate(
+      account.role === 'proveedor' ? '/proveedor/panel' : returnTo || '/',
+      { replace: true }
     );
   };
 
