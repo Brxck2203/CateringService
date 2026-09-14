@@ -48,8 +48,13 @@ const ProviderDashboard = () => {
         {activeTab === 'quotations' && (
           <QuotationRequestsSection
             quotations={dashboardData.quotations}
+            menus={dashboardData.menus}
+            events={dashboardData.events}
             onQuotationsChange={(quotations) =>
               setDashboardData((prev) => ({ ...prev, quotations }))
+            }
+            onEventsChange={(events) =>
+              setDashboardData((prev) => ({ ...prev, events }))
             }
           />
         )}
