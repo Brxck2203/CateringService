@@ -3,7 +3,7 @@ import cateringData from "../data/cateringData";
 import menuCatalogData from "../data/menuCatalogData";
 import { loadProviderDashboardData } from "../services/providerDashboardStorage";
 
-const PROVIDER_CATERING_ID = 1;
+export const PROVIDER_CATERING_ID = 1;
 const CateringCatalogContext = createContext(null);
 
 const asArray = (value) => (Array.isArray(value) ? value : []);

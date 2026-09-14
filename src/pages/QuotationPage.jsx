@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useCateringCatalog } from "../context/CateringCatalogContext";
+import { PROVIDER_CATERING_ID, useCateringCatalog } from "../context/CateringCatalogContext";
+import { addQuotationRequest } from "../services/providerDashboardStorage";
 
 const initialForm = {
   nombre: "",
@@ -55,6 +56,28 @@ function QuotationPage() {
     };
 
     saveToLocalStorage("catering_quotes", newQuotation);
+
+    if (String(catering.id) === String(PROVIDER_CATERING_ID)) {
+      const quotationRequirements = form.requerimientos.trim();
+      const quotationForProvider = {
+        id: `quote-${crypto.randomUUID()}`,
+        clientName: form.nombre || "",
+        email: form.email || "",
+        eventType: form.tipoEvento || catering.tiposEvento?.[0] || "",
+        eventDate: form.fecha || "",
+        guests: Number(form.invitados) || 0,
+        location: form.ubicacion || catering.ubicacion || "",
+        menuName: form.menu || "",
+        budget: Number(selectedMenu?.precio ?? catering.precioMinimo) || 0,
+        status: "Pendiente",
+        summary: `Solicitud de cotización enviada desde el catálogo público para ${catering.nombre}.`,
+        requirements: quotationRequirements ? [quotationRequirements] : [],
+        notes: quotationRequirements
+      };
+
+      addQuotationRequest(quotationForProvider);
+    }
+
     setQuotation(newQuotation);
   };
 

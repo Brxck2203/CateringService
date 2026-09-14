@@ -39,6 +39,23 @@ export const saveProviderDashboardData = (data) => {
   }
 };
 
+export const addQuotationRequest = (quotation) => {
+  try {
+    const currentData = loadProviderDashboardData();
+    const updatedData = {
+      ...currentData,
+      quotations: [quotation, ...currentData.quotations]
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedData));
+    window.dispatchEvent(new Event('provider-dashboard-updated'));
+    return true;
+  } catch (error) {
+    console.error('Error agregando solicitud de cotización:', error);
+    return false;
+  }
+};
+
 export const resetProviderDashboardData = () => {
   try {
     localStorage.removeItem(STORAGE_KEY);
