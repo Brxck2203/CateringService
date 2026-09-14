@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import cateringData from "../data/cateringData";
 import CateringCard from "../components/CateringCard";
+import { useCateringCatalog } from "../context/CateringCatalogContext";
 
 const initialFilters = {
   query: "",
@@ -15,27 +15,28 @@ const initialFilters = {
 };
 
 function MainMenu() {
+  const { caterings } = useCateringCatalog();
   const [filters, setFilters] = useState(initialFilters);
   const hasActiveFilters = Object.values(filters).some(Boolean);
 
   const eventTypes = useMemo(
-    () => [...new Set(cateringData.flatMap((catering) => catering.tiposEvento))].sort(),
-    [],
+    () => [...new Set(caterings.flatMap((catering) => catering.tiposEvento))].sort(),
+    [caterings],
   );
 
   const categories = useMemo(
-    () => [...new Set(cateringData.map((catering) => catering.categoria))].sort(),
-    [],
+    () => [...new Set(caterings.map((catering) => catering.categoria))].sort(),
+    [caterings],
   );
 
   const locations = useMemo(
-    () => [...new Set(cateringData.map((catering) => catering.ubicacion))].sort(),
-    [],
+    () => [...new Set(caterings.map((catering) => catering.ubicacion))].sort(),
+    [caterings],
   );
 
   const menuTypes = useMemo(
-    () => [...new Set(cateringData.flatMap((catering) => catering.tiposMenu))].sort(),
-    [],
+    () => [...new Set(caterings.flatMap((catering) => catering.tiposMenu))].sort(),
+    [caterings],
   );
 
   const filteredCatering = useMemo(() => {
@@ -44,7 +45,7 @@ function MainMenu() {
     const guests = Number(filters.guests);
     const minRating = Number(filters.minRating);
 
-    return cateringData.filter((catering) => {
+    return caterings.filter((catering) => {
       const searchableText = [
         catering.nombre,
         catering.categoria,
@@ -84,7 +85,7 @@ function MainMenu() {
         matchesRating
       );
     });
-  }, [filters]);
+  }, [caterings, filters]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

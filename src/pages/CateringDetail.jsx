@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import cateringData from "../data/cateringData";
 import MenuCatalog from "../components/MenuCatalog";
-import menuCatalogData from "../data/menuCatalogData";
+import { useCateringCatalog } from "../context/CateringCatalogContext";
 
 function Stars({ value }) {
   const rounded = Math.round(value);
@@ -14,7 +13,8 @@ function Stars({ value }) {
 
 function CateringDetail() {
   const { id } = useParams();
-  const catering = cateringData.find((item) => item.id === Number(id));
+  const { caterings, menuCatalog } = useCateringCatalog();
+  const catering = caterings.find((item) => String(item.id) === id);
 
   if (!catering) {
     return (
@@ -28,7 +28,7 @@ function CateringDetail() {
   const whatsappUrl = `${catering.contacto.whatsapp}?text=${encodeURIComponent(
     "Hola, vi su perfil en Catering Services y quisiera consultar por un evento.",
   )}`;
-  const menuPersonalizado = menuCatalogData[catering.id] ?? [];
+  const menuPersonalizado = menuCatalog[catering.id] ?? [];
 
   return (
     <main className="catering-detail">

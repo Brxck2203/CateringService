@@ -31,6 +31,7 @@ export const loadProviderDashboardData = () => {
 export const saveProviderDashboardData = (data) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    window.dispatchEvent(new Event('provider-dashboard-updated'));
     return true;
   } catch (error) {
     console.error('Error guardando datos del panel del proveedor:', error);

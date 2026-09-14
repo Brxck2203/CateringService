@@ -9,7 +9,32 @@ const formatCurrency = (value) =>
 
 const statusOptions = ['Pendiente', 'Aceptada', 'Rechazada'];
 
-const QuotationRequestsSection = ({ quotations, onQuotationsChange }) => {
+function createEventFromQuotation(quotation, menus) {
+  const matchedMenu = menus.find((menu) => menu.name === quotation.menuName);
+
+  return {
+    id: `event-${quotation.id}`,
+    clientName: quotation.clientName,
+    eventType: quotation.eventType,
+    date: quotation.eventDate,
+    time: '18:00',
+    location: quotation.location,
+    guests: Number(quotation.guests) || 0,
+    menuId: matchedMenu ? matchedMenu.id : null,
+    menuName: quotation.menuName,
+    status: 'Confirmado',
+    notes: quotation.notes || '',
+    services: []
+  };
+}
+
+const QuotationRequestsSection = ({
+  quotations,
+  menus,
+  events,
+  onQuotationsChange,
+  onEventsChange
+}) => {
   const [selectedId, setSelectedId] = useState(quotations[0]?.id || '');
 
   const selectedQuotation = useMemo(
@@ -23,6 +48,15 @@ const QuotationRequestsSection = ({ quotations, onQuotationsChange }) => {
     );
 
     onQuotationsChange(updatedQuotations);
+
+    if (status !== 'Aceptada') return;
+
+    const quotation = quotations.find((item) => item.id === id);
+    if (!quotation || events.some((event) => event.id === `event-${quotation.id}`)) {
+      return;
+    }
+
+    onEventsChange([...events, createEventFromQuotation(quotation, menus)]);
   };
 
   return (
