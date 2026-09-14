@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BusinessManagementSection from '../components/provider/BusinessManagementSection';
 import FinanceSection from '../components/provider/FinanceSection';
 import ProviderSidebar from '../components/provider/ProviderSidebar';
@@ -15,12 +15,17 @@ const ProviderDashboard = () => {
   const [activeTab, setActiveTab] = useState('quotations');
   const [dashboardData, setDashboardData] = useState(() => loadProviderDashboardData());
   const [notice, setNotice] = useState('');
+  const hasSavedInitialData = useRef(false);
 
   useEffect(() => {
     const result = saveProviderDashboardData(dashboardData);
 
     if (!result) {
       setNotice('No se pudo guardar la información en este navegador.');
+    } else if (hasSavedInitialData.current) {
+      setNotice('Cambios guardados con éxito.');
+    } else {
+      hasSavedInitialData.current = true;
     }
   }, [dashboardData]);
 

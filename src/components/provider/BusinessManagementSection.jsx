@@ -161,6 +161,7 @@ const BusinessManagementSection = ({
     }
 
     const updatedPortfolio = [...currentPortfolio, normalizedUrl];
+    setLocalBusiness((prev) => ({ ...prev, portfolio: updatedPortfolio }));
     onPortfolioChange(updatedPortfolio);
     setPortfolioUrl('');
     setSuccessMessage('Imagen agregada al portafolio.');
@@ -169,9 +170,26 @@ const BusinessManagementSection = ({
   const removePortfolioImage = (imageUrl) => {
     const currentPortfolio = Array.isArray(localBusiness.portfolio) ? localBusiness.portfolio : [];
     const updatedPortfolio = currentPortfolio.filter((item) => item !== imageUrl);
+    const shouldClearPresentation = localBusiness.presentationImage === imageUrl;
+    const updatedBusiness = {
+      ...localBusiness,
+      portfolio: updatedPortfolio,
+      presentationImage: shouldClearPresentation ? '' : localBusiness.presentationImage
+    };
 
+    setLocalBusiness(updatedBusiness);
     onPortfolioChange(updatedPortfolio);
+    if (shouldClearPresentation) {
+      onBusinessSave(updatedBusiness);
+    }
     setSuccessMessage('Imagen eliminada del portafolio.');
+  };
+
+  const handleSetPresentationImage = (image) => {
+    const updatedBusiness = { ...localBusiness, presentationImage: image };
+    setLocalBusiness(updatedBusiness);
+    onBusinessSave(updatedBusiness);
+    setSuccessMessage('Imagen de presentación actualizada.');
   };
 
   const updateCheckboxGroup = (field, value, checked) => {
@@ -365,6 +383,10 @@ const BusinessManagementSection = ({
                   )
                 }
               />
+              <small className="field-note">
+                También puedes elegir una imagen directamente desde tu portafolio usando el botón
+                "Usar como presentación".
+              </small>
             </label>
 
             {localBusiness.presentationImage && (
@@ -446,11 +468,31 @@ const BusinessManagementSection = ({
 
           <div className="portfolio-grid">
             {portfolioImages.map((image, index) => (
-              <div key={`${image}-${index}`} className="portfolio-item">
+              <div
+                key={`${image}-${index}`}
+                className={`portfolio-item ${
+                  localBusiness.presentationImage === image ? 'selected' : ''
+                }`}
+              >
                 <img src={normalizeDriveImageUrl(image)} alt={`Portafolio ${index + 1}`} />
-                <button type="button" onClick={() => removePortfolioImage(image)}>
-                  Eliminar
-                </button>
+                {localBusiness.presentationImage === image && (
+                  <span className="portfolio-item-badge">Presentación actual</span>
+                )}
+                <div className="portfolio-item-actions">
+                  <button
+                    type="button"
+                    className="portfolio-set-presentation-btn"
+                    disabled={localBusiness.presentationImage === image}
+                    onClick={() => handleSetPresentationImage(image)}
+                  >
+                    {localBusiness.presentationImage === image
+                      ? 'Es la presentación'
+                      : 'Usar como presentación'}
+                  </button>
+                  <button type="button" onClick={() => removePortfolioImage(image)}>
+                    Eliminar
+                  </button>
+                </div>
               </div>
             ))}
           </div>

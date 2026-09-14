@@ -52,6 +52,10 @@ const createManagedCatering = (providerData) => {
   const portfolio = asArray(business.portfolio);
   const eventTypes = asArray(business.eventTypes);
   const specialties = asArray(business.specialties);
+  const presentationImage =
+    typeof business.presentationImage === "string" && business.presentationImage.trim()
+      ? business.presentationImage.trim()
+      : null;
 
   return {
     ...baseCatering,
@@ -72,7 +76,7 @@ const createManagedCatering = (providerData) => {
     tiposEvento: eventTypes.length ? eventTypes : baseCatering.tiposEvento,
     tiposMenu: providerMenus.map((menu) => menu.pricingModel).filter(Boolean),
     imagenes: portfolio.length ? portfolio : baseCatering.imagenes,
-    imagen: portfolio[0] || baseCatering.imagen,
+    imagen: presentationImage || portfolio[0] || baseCatering.imagen,
     precioMinimo: prices.length ? Math.min(...prices) : 0,
     precioMaximo: prices.length ? Math.max(...prices) : 0,
     servicios: [...new Set(menuServices.length ? menuServices : baseCatering.servicios)],
