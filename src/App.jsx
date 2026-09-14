@@ -4,6 +4,7 @@ import CateringDetail from "./pages/CateringDetail";
 import QuotationPage from "./pages/QuotationPage";
 import ProviderDashboard from './pages/ProviderDashboard';
 import { CateringCatalogProvider } from "./context/CateringCatalogContext";
+import AuthPage from "./pages/AuthPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/catering/:id" element={<CateringDetail />} />
           <Route path="/catering/:id/cotizacion" element={<QuotationPage />} />
           <Route path="/proveedor/panel" element={<ProviderDashboard />} />
+          <Route path="/acceso" element={<AuthPage />} />
         </Routes>
       </BrowserRouter>
     </CateringCatalogProvider>
