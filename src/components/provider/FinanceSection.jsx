@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import * as XLSX from 'xlsx';
+import { calculateEventTotalCost } from '../../utils/eventCost';
 
 const transactionCategories = [
   'Anticipo',
@@ -28,11 +29,38 @@ const formatCurrency = (value) =>
     maximumFractionDigits: 0
   }).format(Number(value || 0));
 
-const FinanceSection = ({ transactions, events, onTransactionsChange }) => {
+const FinanceSection = ({ transactions, events, menus, onTransactionsChange }) => {
   const [transactionForm, setTransactionForm] = useState(emptyTransactionForm);
   const [selectedType, setSelectedType] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [error, setError] = useState('');
+
+  const selectedEventCost = useMemo(() => {
+    if (transactionForm.type !== 'income' || transactionForm.eventId === 'sin-evento') {
+      return null;
+    }
+
+    const event = events.find((item) => item.id === transactionForm.eventId);
+    const totalCost = calculateEventTotalCost(event, menus);
+
+    if (totalCost === null) {
+      return { totalCost: null, available: null };
+    }
+
+    const existingIncome = transactions
+      .filter(
+        (item) =>
+          item.type === 'income' &&
+          item.eventId === transactionForm.eventId &&
+          item.id !== transactionForm.id
+      )
+      .reduce((sum, item) => sum + Number(item.amount), 0);
+
+    return {
+      totalCost,
+      available: totalCost - existingIncome
+    };
+  }, [events, menus, transactionForm, transactions]);
 
   const filteredTransactions = useMemo(() => {
     return transactions.filter((item) => {
@@ -77,6 +105,30 @@ const FinanceSection = ({ transactions, events, onTransactionsChange }) => {
     if (Number(transactionForm.amount) <= 0 || Number.isNaN(Number(transactionForm.amount))) {
       setError('El monto debe ser un número mayor que cero.');
       return;
+    }
+
+    if (transactionForm.type === 'income' && transactionForm.eventId !== 'sin-evento') {
+      const event = events.find((item) => item.id === transactionForm.eventId);
+      const totalCost = calculateEventTotalCost(event, menus);
+
+      if (totalCost !== null) {
+        const existingIncome = transactions
+          .filter(
+            (item) =>
+              item.type === 'income' &&
+              item.eventId === transactionForm.eventId &&
+              item.id !== transactionForm.id
+          )
+          .reduce((sum, item) => sum + Number(item.amount), 0);
+        const available = totalCost - existingIncome;
+
+        if (Number(transactionForm.amount) > available) {
+          setError(
+            `El monto excede lo pendiente por cobrar de este evento. Disponible: ${formatCurrency(available)} de un total de ${formatCurrency(totalCost)}.`
+          );
+          return;
+        }
+      }
     }
 
     const normalizedTransaction = {
@@ -194,6 +246,19 @@ const FinanceSection = ({ transactions, events, onTransactionsChange }) => {
                   </option>
                 ))}
               </select>
+              {transactionForm.type === 'income' &&
+                transactionForm.eventId !== 'sin-evento' &&
+                (selectedEventCost?.totalCost === null ? (
+                  <small className="field-note">
+                    No fue posible calcular el costo del servicio para este evento; el ingreso no
+                    tendrá límite.
+                  </small>
+                ) : (
+                  <small className="field-note">
+                    Costo total del servicio: {formatCurrency(selectedEventCost.totalCost)}.
+                    Pendiente por cobrar: {formatCurrency(selectedEventCost.available)}.
+                  </small>
+                ))}
             </label>
 
             <label>

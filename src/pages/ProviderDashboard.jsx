@@ -87,6 +87,7 @@ const ProviderDashboard = () => {
           <FinanceSection
             transactions={dashboardData.transactions}
             events={dashboardData.events}
+            menus={dashboardData.menus}
             onTransactionsChange={(transactions) =>
               setDashboardData((prev) => ({ ...prev, transactions }))
             }
