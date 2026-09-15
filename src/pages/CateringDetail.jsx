@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import MenuCatalog from "../components/MenuCatalog";
 import { useCateringCatalog } from "../context/CateringCatalogContext";
 import SiteHeader from "../components/SiteHeader";
+import { getMenuItems } from "../utils/menuItems";
 
 function Stars({ value }) {
   const rounded = Math.round(value);
@@ -62,7 +63,7 @@ function CateringDetail() {
         <div className="detail-facts">
           <p><strong>Ubicación:</strong> {catering.ubicacion}</p>
           <p>
-            <strong>Precio orientativo:</strong> ₡{catering.precioMinimo.toLocaleString()} - ₡{catering.precioMaximo.toLocaleString()}
+            <strong>Cotización:</strong> El precio se calcula según el paquete, los cambios y los extras seleccionados.
           </p>
           <p>
             <strong>Capacidad:</strong> {catering.capacidadMinima} - {catering.capacidadMaxima} personas
@@ -86,15 +87,19 @@ function CateringDetail() {
             <p className="section-eyebrow">Catálogo</p>
             <h2>Menús y paquetes</h2>
           </div>
-          <span className="muted-text">Precios orientativos</span>
+          <span className="muted-text">Paquetes personalizables</span>
         </div>
 
         <div className="menu-grid">
           {catering.menus.map((menu) => (
             <article className="menu-card" key={menu.nombre}>
               <h3>{menu.nombre}</h3>
-              <p className="menu-card__price">₡{menu.precio.toLocaleString()}</p>
-              <p>{menu.descripcion}</p>
+              <p className="menu-card__subtitle">Incluye:</p>
+              <ul className="menu-card__items">
+                {getMenuItems(menu).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>

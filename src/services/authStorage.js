@@ -39,7 +39,7 @@ export const findAccountByEmail = (email) => {
   ) || null;
 };
 
-export const registerAccount = ({ name, email, password, role, businessId }) => {
+export const registerAccount = ({ name, email, phone, password, role, businessId }) => {
   const accounts = loadAccounts();
 
   if (accounts.some((account) => account.email.toLowerCase() === email.trim().toLowerCase())) {
@@ -50,6 +50,7 @@ export const registerAccount = ({ name, email, password, role, businessId }) => 
     id: `account-${crypto.randomUUID()}`,
     name: name.trim(),
     email: email.trim(),
+    phone: phone.trim(),
     password,
     role,
     ...(role === 'proveedor' ? { businessId } : {})

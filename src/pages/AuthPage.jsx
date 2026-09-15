@@ -12,6 +12,7 @@ import '../styles/authPage.css';
 const initialRegisterForm = {
   name: '',
   email: '',
+  phone: '',
   password: '',
   confirmPassword: '',
   role: 'cliente'
@@ -26,6 +27,7 @@ const RECOVERY_MESSAGE =
   'Si el correo existe en nuestra plataforma, se ha enviado un enlace de recuperación.';
 
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const isValidPhone = (phone) => String(phone || '').replace(/\D/g, '').length >= 8;
 const isStrongPassword = (password) =>
   password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password);
 
@@ -53,15 +55,20 @@ function AuthPage() {
     setMessage('');
     setError('');
 
-    const { name, email, password, confirmPassword, role } = registerForm;
+    const { name, email, phone, password, confirmPassword, role } = registerForm;
 
-    if (!name.trim() || !email.trim() || !password || !confirmPassword) {
+    if (!name.trim() || !email.trim() || !phone.trim() || !password || !confirmPassword) {
       setError('Todos los campos son obligatorios.');
       return;
     }
 
     if (!isValidEmail(email.trim())) {
       setError('Ingresa un correo electrónico válido.');
+      return;
+    }
+
+    if (!isValidPhone(phone)) {
+      setError('Ingresa un número de teléfono válido de al menos 8 dígitos.');
       return;
     }
 
@@ -78,6 +85,7 @@ function AuthPage() {
     const result = registerAccount({
       name,
       email,
+      phone,
       password,
       role,
       businessId: role === 'proveedor' ? PROVIDER_CATERING_ID : undefined
@@ -209,6 +217,19 @@ function AuthPage() {
                 }
                 required
               />
+            </label>
+            <label>
+              Número de teléfono
+              <input
+                type="tel"
+                value={registerForm.phone}
+                onChange={(event) =>
+                  setRegisterForm((current) => ({ ...current, phone: event.target.value }))
+                }
+                placeholder="Ejemplo: 8888-8888"
+                required
+              />
+              <small>Quedará guardado en tu cuenta para facilitar el contacto relacionado con las cotizaciones.</small>
             </label>
             <label>
               Contraseña

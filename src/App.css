@@ -1,1 +1,36 @@
 /* Los estilos globales del prototipo se encuentran en src/index.css. */
+
+
+.quote-contact-summary {
+  padding: 20px;
+  border: 1px solid #dbe3ee;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.quote-contact-summary h2 {
+  margin: 4px 0 14px;
+  font-size: 1.05rem;
+}
+
+.quote-contact-summary__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 20px;
+}
+
+.quote-contact-summary__grid p {
+  margin: 0;
+}
+
+.quote-contact-summary__warning {
+  margin: 14px 0 0;
+  color: #9a6700;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 760px) {
+  .quote-contact-summary__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -24,6 +24,7 @@ export function AuthProvider({ children }) {
           id: account.id,
           name: account.name,
           email: account.email,
+          phone: account.phone ?? '',
           role: account.role,
           businessId: account.businessId ?? null
         };

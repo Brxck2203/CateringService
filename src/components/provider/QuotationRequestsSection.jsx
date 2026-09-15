@@ -114,7 +114,9 @@ const QuotationRequestsSection = ({
 
                   <p className="request-summary">{quote.summary}</p>
 
-                  <strong>{formatCurrency(quote.budget)}</strong>
+                  <span className="request-internal-price">
+                    Precio base interno: <strong>{formatCurrency(quote.budget)}</strong>
+                  </span>
                 </button>
               ))}
             </div>
@@ -151,6 +153,9 @@ const QuotationRequestsSection = ({
                     <strong>Correo:</strong> {selectedQuotation.email}
                   </div>
                   <div>
+                    <strong>Teléfono:</strong> {selectedQuotation.phone || 'No registrado'}
+                  </div>
+                  <div>
                     <strong>Fecha del evento:</strong> {selectedQuotation.eventDate}
                   </div>
                   <div>
@@ -163,7 +168,7 @@ const QuotationRequestsSection = ({
                     <strong>Paquete:</strong> {selectedQuotation.menuName}
                   </div>
                   <div>
-                    <strong>Presupuesto:</strong> {formatCurrency(selectedQuotation.budget)}
+                    <strong>Precio base interno:</strong> {formatCurrency(selectedQuotation.budget)}
                   </div>
                 </div>
 

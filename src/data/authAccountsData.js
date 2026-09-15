@@ -4,7 +4,8 @@ export const authAccountsData = [
     email: 'cliente.demo@correo.com',
     password: 'Cliente2026',
     role: 'cliente',
-    name: 'Cliente Demo'
+    name: 'Cliente Demo',
+    phone: '8888-8888'
   },
   {
     id: 'account-provider-demo',
@@ -12,6 +13,7 @@ export const authAccountsData = [
     password: 'CateringFiesta2026',
     role: 'proveedor',
     name: 'Catering Fiesta',
+    phone: '2222-2222',
     businessId: 1
   }
 ];
